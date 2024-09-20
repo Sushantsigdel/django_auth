@@ -161,7 +161,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'src.apps.auth.auth.CustomJWTAuthentication',
     ],
 }
 
@@ -173,3 +173,6 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
 }
+
+# Auth Cookie settings
+AUTH_COOKIE_NAME = 'access_token'
