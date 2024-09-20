@@ -176,3 +176,9 @@ DJOSER = {
 
 # Auth Cookie settings
 AUTH_COOKIE_NAME = 'access_token'
+AUTH_COOKIE_MAX_AGE = 60 * 5  # 5 minutes
+AUTH_COOKIE_REFRESH_AGE = 60 * 60 * 24  # 1 day
+AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'TRUE') == 'True'
+AUTH_COOKIE_HTTPONLY = True
+AUTH_COOKIE_PATH = '/'
+AUTH_COOKIE_SAMESITE = 'None'
