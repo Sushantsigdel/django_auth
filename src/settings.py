@@ -154,6 +154,41 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Backend Auth settings
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Social Auth settings
+# Google Auth
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = getenv('GOOGLE_AUTH_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = getenv('GOOGLE_AUTH_SECRET_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid'
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
+# Facebook Auth
+SOCIAL_AUTH_FACEBOOK_KEY = getenv('FACEBOOK_AUTH_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = getenv('FACEBOOK_AUTH_SECRET_KEY')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'email, first_name, last_name'
+}
+
+# Cookie Auth settings
+AUTH_COOKIE_NAME = 'access'
+AUTH_COOKIE_MAX_AGE = 60 * 5  # 5 minutes
+AUTH_COOKIE_REFRESH_AGE = 60 * 60 * 24  # 1 day
+AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'TRUE') == 'True'
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = '/'
+AUTH_COOKIE_SAMESITE = 'None'
+
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -173,14 +208,7 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': getenv('REDIRECT_URLS').split(','),
 }
 
-# Auth Cookie settings
-AUTH_COOKIE_NAME = 'access'
-AUTH_COOKIE_MAX_AGE = 60 * 5  # 5 minutes
-AUTH_COOKIE_REFRESH_AGE = 60 * 60 * 24  # 1 day
-AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'TRUE') == 'True'
-AUTH_COOKIE_HTTP_ONLY = True
-AUTH_COOKIE_PATH = '/'
-AUTH_COOKIE_SAMESITE = 'None'
 
